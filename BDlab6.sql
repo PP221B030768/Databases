@@ -97,3 +97,21 @@ CREATE VIEW numofsales
 AS SELECT COUNT(dealer_id), AVG(amount), SUM(amount)
    FROM sell
     group by dealer_id;
+    
+ 
+CREATE VIEW citynum
+AS SELECT location, SUM (dealer.charge*sell.amount)
+   FROM dealer
+   join sell on dealer.id = sell.dealer_id
+   GROUP BY location;
+
+CREATE VIEW cityavg
+AS SELECT location, count(sell.dealer_id), SUM (amount), AVG(amount)
+   FROM dealer
+            join sell on dealer.id = sell.dealer_id
+   GROUP BY location;
+
+CREATE VIEW cityexpences
+AS SELECT city, count(city), SUM (amount) as amountSum, SUM(charge * sell.amount)
+   FROM client, dealer, sell where dealer.id = client.dealer_id and client.id = sell.client_id
+   GROUP BY city;
