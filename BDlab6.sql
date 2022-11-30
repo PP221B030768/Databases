@@ -86,3 +86,14 @@ AS SELECT date, COUNT(DISTINCT client_id),
           AVG(amount), SUM(amount)
    FROM sell
    GROUP BY date;
+   
+CREATE VIEW topamount
+AS SELECT date, amount
+        FROM sell
+        order by amount asc
+        limit 5;
+
+CREATE VIEW numofsales
+AS SELECT COUNT(dealer_id), AVG(amount), SUM(amount)
+   FROM sell
+    group by dealer_id;
